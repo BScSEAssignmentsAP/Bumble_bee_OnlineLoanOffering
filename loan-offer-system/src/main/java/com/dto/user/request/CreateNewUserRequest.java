@@ -16,6 +16,8 @@ public class CreateNewUserRequest {
     private double usedAmount;
     private int installPlan;
 
+//create git commit
+
 
     public CreateNewUserRequest(int userId, String firstName, String lastName, String dob, int userType, String userName, String secretKey, String userEmail, String userMobileNumber, String nic, int customerId, double loanBalance, double usedAmount, int installPlan) {
         this.userId = userId;
