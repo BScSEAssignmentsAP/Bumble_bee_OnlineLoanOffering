@@ -3,14 +3,17 @@ package com.dao.impl;
 import com.dao.OfferDAOConstant;
 import com.dao.UserDAO;
 import com.dto.response.GeneralResponse;
-import com.dto.response.LoanOfferResponse;
 import com.dto.user.request.CreateNewUserRequest;
+import com.dto.user.request.GetCustomerDetailReq;
+import com.dto.user.response.CustomerRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 @Repository
@@ -24,9 +27,11 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public GeneralResponse createNewUser(CreateNewUserRequest createNewUserReq) {
+        Long startTime=System.currentTimeMillis();
+
         GeneralResponse response=new GeneralResponse();
 
-        Connection connection;
+        Connection connection = null;
         //Statement statement;
         CallableStatement callableStatement;
 
@@ -68,7 +73,110 @@ connection = DataSourceUtils.getConnection(jdbcTemplate.getDataSource());
         }catch (SQLException exception){
 logger.info("An error occured in createNewUser"+exception.toString());
 
+        }finally {
+            DataSourceUtils.releaseConnection(connection,jdbcTemplate.getDataSource());
+            logger.info("Time taken for createNewUser in seconds:"+(double)(System.currentTimeMillis()-startTime)/1000);
+        }
+
+
+        return response;
+    }
+
+    @Override
+    public CustomerRes getCustomerDetail(GetCustomerDetailReq getCustomerDetailReq) {
+        Long startTime=System.currentTimeMillis();
+        CustomerRes response=null;//new CustomerRes();
+
+        Connection connection = null;
+        //Statement statement;
+        CallableStatement callableStatement;
+        ResultSet resultSet;
+        try {
+            logger.info("getCustomerDetail-request------------>" + getCustomerDetailReq.toString());
+
+            connection = DataSourceUtils.getConnection(jdbcTemplate.getDataSource());
+
+            //callableStatement = connection.prepareCall(OfferDAOConstant.UserConstant.INSERT_UPDATE_ADMIN_CUSTOMER);
+            callableStatement = connection.prepareCall(OfferDAOConstant.UserConstant.GET_CUSTOMER_DETAIL);
+            callableStatement.setObject(1, getCustomerDetailReq.getCustomerId(), Types.INTEGER);
+
+
+            callableStatement.execute();
+            resultSet = callableStatement.getResultSet();
+
+
+            if (resultSet != null) {
+                response = new CustomerRes();
+                while (resultSet.next()) {
+                    response.setFullName(resultSet.getString(1));
+                    response.setDob(resultSet.getString(2));
+                    response.setUserTypeStr(resultSet.getString(3));
+                    response.setUserEmail(resultSet.getString(4));
+                    response.setUserMobileNumber(resultSet.getString(5));
+                    response.setLoanBalance(resultSet.getDouble(6));
+                    response.setUsedAmount(resultSet.getDouble(7));
+                    response.setPlanName(resultSet.getString(8));
+                }
+            }
+
+        }catch (SQLException exception){
+            logger.info("An error occured in getCustomerDetail"+exception.toString());
+        }finally {
+            DataSourceUtils.releaseConnection(connection,jdbcTemplate.getDataSource());
+            logger.info("Time taken for getCustomerDetail in seconds:"+(double)(System.currentTimeMillis()-startTime)/1000);
         }
         return response;
+    }
+
+    @Override
+    public List<CustomerRes> getCustomerList() {
+        Long startTime=System.currentTimeMillis();
+
+        List<CustomerRes> list=null;//new CustomerRes();
+
+        Connection connection = null;
+        //Statement statement;
+        CallableStatement callableStatement;
+        ResultSet resultSet;
+        try {
+
+
+            connection = DataSourceUtils.getConnection(jdbcTemplate.getDataSource());
+
+            //callableStatement = connection.prepareCall(OfferDAOConstant.UserConstant.INSERT_UPDATE_ADMIN_CUSTOMER);
+            callableStatement = connection.prepareCall(OfferDAOConstant.UserConstant.GET_CUSTOMER_LIST);
+
+
+
+            callableStatement.execute();
+            resultSet = callableStatement.getResultSet();
+
+
+            if (resultSet != null) {
+list =new ArrayList<>();
+                while (resultSet.next()) {
+                    CustomerRes response = new CustomerRes();
+                    response.setFullName(resultSet.getString(1));
+                    response.setDob(resultSet.getString(2));
+                    response.setUserTypeStr(resultSet.getString(3));
+                    response.setUserEmail(resultSet.getString(4));
+                    response.setUserMobileNumber(resultSet.getString(5));
+                    response.setLoanBalance(resultSet.getDouble(6));
+                    response.setUsedAmount(resultSet.getDouble(7));
+                    response.setPlanName(resultSet.getString(8));
+                    list.add(response);
+                }
+            }
+
+        }catch (SQLException exception){
+            logger.info("An error occured in getCustomerDetail"+exception.toString());
+        }finally {
+            DataSourceUtils.releaseConnection(connection,jdbcTemplate.getDataSource());
+            logger.info("Time taken for getCustomerList in seconds:"+(double)(System.currentTimeMillis()-startTime)/1000);
+        }
+        return list;
+
+
+
     }
 }
