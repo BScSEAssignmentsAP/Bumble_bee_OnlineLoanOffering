@@ -77,7 +77,7 @@ CREATE TABLE `customer` (
   PRIMARY KEY (`CustomerId`),
   KEY `userFk_idx` (`UserId`),
   CONSTRAINT `userFk` FOREIGN KEY (`UserId`) REFERENCES `user` (`UserId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -86,6 +86,7 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
+INSERT INTO `customer` VALUES (1,15000,0,1,2);
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -129,7 +130,7 @@ CREATE TABLE `installmentplan` (
   `InstallmentPlanId` int NOT NULL AUTO_INCREMENT,
   `PlanName` varchar(100) NOT NULL,
   PRIMARY KEY (`InstallmentPlanId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -138,6 +139,7 @@ CREATE TABLE `installmentplan` (
 
 LOCK TABLES `installmentplan` WRITE;
 /*!40000 ALTER TABLE `installmentplan` DISABLE KEYS */;
+INSERT INTO `installmentplan` VALUES (1,'10000-5000-5000');
 /*!40000 ALTER TABLE `installmentplan` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -266,9 +268,12 @@ CREATE TABLE `user` (
   `SecretKey` varchar(100) NOT NULL,
   `CreatedOn` timestamp NULL DEFAULT NULL,
   `UpdatedOn` timestamp NULL DEFAULT NULL,
+  `UserEmail` varchar(45) NOT NULL,
+  `UserMobileNumber` varchar(10) NOT NULL,
+  `NIC` varchar(20) NOT NULL,
   PRIMARY KEY (`UserId`),
   UNIQUE KEY `UserName_UNIQUE` (`UserName`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -277,8 +282,132 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,'Akaly','Gnanasekaram','18-01-1997',1,'Gakalya','12345','2023-03-28 18:35:37',NULL,'akalya.gnanasekaram@gmail.com','',''),(2,'Thanu','Jaya','18-01-1997',2,'T1997','12345','2023-03-28 18:40:05',NULL,'','','');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping routines for database 'bumblebeeloanoffer'
+--
+/*!50003 DROP PROCEDURE IF EXISTS `insert_update_admin_customer_proc` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_update_admin_customer_proc`(
+	 IN pUserId int ,
+	 IN pFirstName varchar(50),
+	 IN pLastName varchar(50),
+	 IN pDateOfBirth varchar(20),
+	 IN pUserType int,
+	 IN pUserName varchar(30),
+	 IN pSecretKey varchar(100),
+     IN pUserEmail varchar(45),
+	 IN pUserMobileNumber varchar(10),
+	 IN pNIC varchar(20),
+	 IN pCustomerId int ,
+	 IN pLoanBalance double ,
+	 IN pUsedAmount double ,
+	 IN pInstallmentPlan int,
+	 OUT rRES tinyint(1),
+	 OUT rSatustCode int,
+	 OUT rMSG varchar(50)
+)
+BEGIN
+	DECLARE IUserId INTEGER DEFAULT 0;
+    DECLARE lcount INTEGER DEFAULT 0;
+    
+	SET rRES := true;
+	SET rSatustCode := 3000; #success status code
+	SET rMSG := 'Success';
+
+
+
+	IF pUserEmail is null or pUserEmail = '' then
+		SET rRES := false;
+		SET rSatustCode := 3001; #invalid information
+		SET rMSG := 'Incorrect Email Address';
+    ELSE 
+		select count(*) into lcount from user where useremail = pUserEmail;
+    IF lcount > 0 then
+		SET rRES := false;
+		SET rSatustCode := 3002; #already registred
+		SET rMSG := 'User already registerd..!';
+         
+         ELSE 
+         
+         IF pUserId = 0 then
+		INSERT INTO user
+				(FirstName,
+				LastName,
+				DateOfBirth,
+				UserType,
+				UserName,
+				SecretKey,
+                UserEmail,
+                UserMobileNumber,
+                NIC,
+				CreatedOn)
+		VALUES
+				(pFirstName,
+				pLastName,
+				pDateOfBirth,
+				pUserType,
+				pUserName,
+				pSecretKey,
+				pUserEmail,
+                pUserMobileNumber,
+                pNIC,
+				now());
+                
+SELECT lAST_INSERT_ID() INTO IUserId;
+      IF pUserType = 2 THEN
+		INSERT INTO customer
+				(LoanBalance,
+				UsedAmount,
+				InstallmentPlan,
+				UserId)
+				VALUES
+				(pLoanBalance,
+				pUsedAmount,
+				pInstallmentPlan,
+				IUserId);
+
+      END IF; 
+      
+      ELSE 
+      UPDATE user
+			SET
+			FirstName = pFirstName,
+			LastName = pLastName,
+			DateOfBirth = pDateOfBirth,
+			UpdatedOn = now()
+			WHERE UserId = pUserId;
+        
+End IF;
+
+
+
+
+         END IF;
+	END IF;
+
+
+
+
+	
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -289,4 +418,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-03-27 23:46:42
+-- Dump completed on 2023-03-29  7:35:28
