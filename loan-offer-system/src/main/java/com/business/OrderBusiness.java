@@ -21,5 +21,5 @@ public interface OrderBusiness {
      * @param getOrderDetailReq
      * @return
      */
-    GetOrderDetailRes getOrderSingleCalculation(GetOredrDetailReq getOrderDetailReq);
+    CommonResponse getOrderSingleCalculation(GetOredrDetailReq getOrderDetailReq);
 }
