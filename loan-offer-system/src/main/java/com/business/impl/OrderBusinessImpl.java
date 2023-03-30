@@ -3,6 +3,7 @@ package com.business.impl;
 import com.business.OrderBusiness;
 import com.dao.OrderDAO;
 import com.dto.request.GetOredrDetailReq;
+import com.dto.response.CommonResponse;
 import com.dto.response.GetOrderDetailRes;
 import com.dto.response.Product;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class OrderBusinessImpl implements OrderBusiness {
     }
 
     @Override
-    public GetOrderDetailRes getOrderSingleCalculation(GetOredrDetailReq getOrderDetailReq) {
+    public CommonResponse getOrderSingleCalculation(GetOredrDetailReq getOrderDetailReq) {
         return orderDAO.getOrderSingleCalculation(getOrderDetailReq);
     }
 
