@@ -2,7 +2,10 @@ package com.dao.impl;
 
 import com.dao.OfferDAOConstant;
 import com.dao.UserDAO;
+import com.dto.request.UserLoginReq;
+import com.dto.response.CommonResponse;
 import com.dto.response.GeneralResponse;
+import com.dto.response.UserLoginRes;
 import com.dto.user.request.CreateNewUserRequest;
 import com.dto.user.request.GetCustomerDetailReq;
 import com.dto.user.response.CustomerRes;
@@ -179,5 +182,63 @@ list =new ArrayList<>();
 
 
 
+    }
+
+    @Override
+    public CommonResponse login(UserLoginReq loginReq) {
+        Long startTime=System.currentTimeMillis();
+
+        CommonResponse response=new CommonResponse();
+
+        Connection connection = null;
+        //Statement statement;
+        CallableStatement callableStatement;
+
+        try {
+            logger.info("loginReq-request------------>"+loginReq.toString());
+
+            connection = DataSourceUtils.getConnection(jdbcTemplate.getDataSource());
+
+            //callableStatement = connection.prepareCall(OfferDAOConstant.UserConstant.INSERT_UPDATE_ADMIN_CUSTOMER);
+            callableStatement = connection.prepareCall(OfferDAOConstant.UserConstant.LOGIN_USER);
+            callableStatement.setObject(1,loginReq.getUserName(),Types.VARCHAR);
+            callableStatement.setObject(2,HashUtil.getHashCode(loginReq.getPassword()),Types.VARCHAR);
+
+            callableStatement.registerOutParameter(3,Types.INTEGER);
+            callableStatement.registerOutParameter(4,Types.INTEGER);
+            callableStatement.registerOutParameter(5,Types.VARCHAR);
+            callableStatement.registerOutParameter(6,Types.VARCHAR);
+
+            callableStatement.registerOutParameter(7,Types.BOOLEAN);
+            callableStatement.registerOutParameter(8,Types.INTEGER);
+            callableStatement.registerOutParameter(9,Types.VARCHAR);
+
+            callableStatement.execute();
+            callableStatement.getResultSet();
+
+            response.setRes((Boolean) callableStatement.getObject(7));
+            response.setStatusCode((Integer) callableStatement.getObject(8));
+            response.setMsg((String) callableStatement.getObject(9));
+
+            if(response.isRes()){
+                UserLoginRes loginRes=new UserLoginRes();
+                loginRes.setFirstName(callableStatement.getString(3));
+                loginRes.setLastName(callableStatement.getString(4));
+                loginRes.setUserType(callableStatement.getInt(5));
+                loginRes.setUserId(callableStatement.getInt(6));
+
+                response.setValue(loginRes);
+
+            }
+        }catch (SQLException exception){
+            logger.info("An error occured in login"+exception.toString());
+
+        }finally {
+            DataSourceUtils.releaseConnection(connection,jdbcTemplate.getDataSource());
+            logger.info("Time taken for login in seconds:"+(double)(System.currentTimeMillis()-startTime)/1000);
+        }
+
+
+        return response;
     }
 }
