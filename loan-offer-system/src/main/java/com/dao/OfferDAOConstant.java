@@ -21,7 +21,7 @@ public class OfferDAOConstant {
         String GET_ALL_PRODUCTS = "{call get_all_products_proc()}";
 
 
-        String GET_ORDER_DETAIL_PROC = "{call get_order_detail_proc(?,?,?,?,?,?,?,?)}";
+        String GET_ORDER_DETAIL_PROC = "{call get_order_detail_proc(?,?,?,?,?,?,?,?,?,?,?)}";
 
     }
 }
