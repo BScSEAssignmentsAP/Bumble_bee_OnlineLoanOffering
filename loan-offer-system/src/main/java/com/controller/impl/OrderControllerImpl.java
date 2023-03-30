@@ -3,6 +3,7 @@ package com.controller.impl;
 import com.business.OrderBusiness;
 import com.controller.OrderController;
 import com.dto.request.GetOredrDetailReq;
+import com.dto.response.CommonResponse;
 import com.dto.response.GetOrderDetailRes;
 import com.dto.response.LoanOfferResponse;
 import com.dto.response.Product;
@@ -34,11 +35,21 @@ public class OrderControllerImpl implements OrderController {
     @Override
     @PostMapping("/get/order/single/request")
     public LoanOfferResponse getOrderSingleCalculation(@RequestBody GetOredrDetailReq getOrderDetailReq) {
-        GetOrderDetailRes getOrderDetailRes = orderBusiness.getOrderSingleCalculation(getOrderDetailReq);
-        return LoanOfferResponse.generateResponse(
-                getOrderDetailRes,
-                ApplicationConstant.SuccessStatusCode,
-                ApplicationConstant.SuccessMsg);
+        CommonResponse commonResponse = orderBusiness.getOrderSingleCalculation(getOrderDetailReq);
+        if(commonResponse.isRes()){
+            return LoanOfferResponse.generateResponse(
+                    commonResponse.getValue(),
+                    ApplicationConstant.SuccessStatusCode,
+                    ApplicationConstant.SuccessMsg);
+
+        }
+else {
+            return LoanOfferResponse.generateResponse(
+                    null,
+                    commonResponse.getStatusCode(),
+                    commonResponse.getMsg());
+        }
+
     }
 
 
