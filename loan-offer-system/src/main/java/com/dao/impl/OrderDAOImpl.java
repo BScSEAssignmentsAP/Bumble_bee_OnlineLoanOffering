@@ -3,6 +3,7 @@ package com.dao.impl;
 import com.dao.OfferDAOConstant;
 import com.dao.OrderDAO;
 import com.dto.request.GetOredrDetailReq;
+import com.dto.response.CommonResponse;
 import com.dto.response.GeneralResponse;
 import com.dto.response.GetOrderDetailRes;
 import com.dto.response.Product;
@@ -81,10 +82,12 @@ public class OrderDAOImpl implements OrderDAO {
 
 
     @Override
-    public GetOrderDetailRes getOrderSingleCalculation(GetOredrDetailReq getOrderDetailReq) {
+    public CommonResponse getOrderSingleCalculation(GetOredrDetailReq getOrderDetailReq) {
         Long startTime = System.currentTimeMillis();
 
-        GetOrderDetailRes response = new GetOrderDetailRes();
+        CommonResponse response = new CommonResponse();
+
+
 
         Connection connection = null;
         //Statement statement;
@@ -109,14 +112,31 @@ public class OrderDAOImpl implements OrderDAO {
             callableStatement.registerOutParameter(7, Types.VARCHAR);
             callableStatement.registerOutParameter(8, Types.DOUBLE);
 
+            callableStatement.registerOutParameter(9,Types.BOOLEAN);
+            callableStatement.registerOutParameter(10,Types.INTEGER);
+            callableStatement.registerOutParameter(11,Types.VARCHAR);
+
+
             callableStatement.execute();
             callableStatement.getResultSet();
-            response.setProductId(callableStatement.getInt(3));
-            response.setCategoryName( callableStatement.getString(4));
-            response.setBrandName( callableStatement.getString(5));
-            response.setQty(callableStatement.getInt(6));
-            response.setProductName( callableStatement.getString(7));
-            response.setSubTotal( callableStatement.getDouble(8));
+
+            response.setRes((Boolean) callableStatement.getObject(9));
+            response.setStatusCode((Integer) callableStatement.getObject(10));
+            response.setMsg((String) callableStatement.getObject(11));
+
+
+            if (response.isRes()){
+                GetOrderDetailRes getOrderDetailRes = new GetOrderDetailRes();
+                getOrderDetailRes.setProductId(callableStatement.getInt(3));
+                getOrderDetailRes.setCategoryName( callableStatement.getString(4));
+                getOrderDetailRes.setBrandName( callableStatement.getString(5));
+                getOrderDetailRes.setQty(callableStatement.getInt(6));
+                getOrderDetailRes.setProductName( callableStatement.getString(7));
+                getOrderDetailRes.setSubTotal( callableStatement.getDouble(8));
+
+                response.setValue(getOrderDetailRes);
+
+            }
 
 
 //logger.info(response.toString());
