@@ -2,6 +2,7 @@ package com.controller.impl;
 
 import com.business.OrderBusiness;
 import com.controller.OrderController;
+import com.dto.request.CreateOrderReq;
 import com.dto.request.GetOredrDetailReq;
 import com.dto.response.CommonResponse;
 import com.dto.response.GetOrderDetailRes;
@@ -50,6 +51,17 @@ else {
                     commonResponse.getMsg());
         }
 
+    }
+
+    @Override
+    @PostMapping("/create/order")
+    public LoanOfferResponse placeOrder(@RequestBody CreateOrderReq createOrderReq) {
+        CommonResponse commonResponse = orderBusiness.placeOrder(createOrderReq);
+
+        return LoanOfferResponse.generateResponse(
+                null,
+                ApplicationConstant.SuccessStatusCode,
+                ApplicationConstant.SuccessMsg);
     }
 
 

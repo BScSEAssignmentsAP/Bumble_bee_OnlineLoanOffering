@@ -2,7 +2,9 @@ package com.business.impl;
 
 import com.business.OrderBusiness;
 import com.dao.OrderDAO;
+import com.dto.request.CreateOrderReq;
 import com.dto.request.GetOredrDetailReq;
+import com.dto.request.OrderInfoReq;
 import com.dto.response.CommonResponse;
 import com.dto.response.GetOrderDetailRes;
 import com.dto.response.Product;
@@ -31,6 +33,19 @@ public class OrderBusinessImpl implements OrderBusiness {
     @Override
     public CommonResponse getOrderSingleCalculation(GetOredrDetailReq getOrderDetailReq) {
         return orderDAO.getOrderSingleCalculation(getOrderDetailReq);
+    }
+
+    @Override
+    public CommonResponse placeOrder(CreateOrderReq createOrderReq) {
+logger.info("placeOrder----------->"+createOrderReq.toString());
+        String orderRequest = "";
+        for (OrderInfoReq req : createOrderReq.getOrderDetail()) {
+            orderRequest = orderRequest + req.getProductId() +"||"+req.getQty()+",";
+        }
+        orderRequest = orderRequest.substring(0, orderRequest.length()-1);
+        logger.info("placeOrder-orderRequest------------------>" + orderRequest);
+        return null;//orderDAO.placeOrder(createOrderReq,orderRequest);
+
     }
 
 
