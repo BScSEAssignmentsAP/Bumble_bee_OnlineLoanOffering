@@ -1,5 +1,6 @@
 package com.business;
 
+import com.dto.request.CreateOrderReq;
 import com.dto.request.GetOredrDetailReq;
 import com.dto.response.CommonResponse;
 import com.dto.response.GetOrderDetailRes;
@@ -21,5 +22,14 @@ public interface OrderBusiness {
      * @param getOrderDetailReq
      * @return
      */
-    GetOrderDetailRes getOrderSingleCalculation(GetOredrDetailReq getOrderDetailReq);
+    CommonResponse getOrderSingleCalculation(GetOredrDetailReq getOrderDetailReq);
+
+
+    /**
+     * placeOrder
+     * @param createOrderReq
+     * @return
+     */
+
+    CommonResponse placeOrder(CreateOrderReq createOrderReq);
 }

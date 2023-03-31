@@ -1,10 +1,12 @@
 package com.controller;
 
+import com.dto.request.CreateOrderReq;
 import com.dto.request.GetOredrDetailReq;
 import com.dto.response.LoanOfferResponse;
-import org.springframework.web.bind.annotation.PostMapping;
 
 public interface OrderController {
+
+
     /**
      * getAllProducts
      * @return
@@ -18,6 +20,14 @@ public interface OrderController {
      * @return
      */
     public LoanOfferResponse getOrderSingleCalculation(GetOredrDetailReq getOrderDetailReq);
+
+
+    /**
+     * placeOrder
+     * @param createOrderReq
+     * @return
+     */
+    public LoanOfferResponse placeOrder(CreateOrderReq createOrderReq);
 
 
 }
