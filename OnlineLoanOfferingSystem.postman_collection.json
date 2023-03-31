@@ -1,0 +1,227 @@
+{
+	"info": {
+		"_postman_id": "7ef9ebda-e0a5-4ff3-8b89-7dda9095aab7",
+		"name": "OnlineLoanOfferingSystem",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23658310"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8081/create/new/user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"userId\":0,\r\n\"firstName\":\"Niroshan\",\r\n\"lastName\":\"Nathan\",\r\n\"dob\":\"25-012-1991\",\r\n\"userType\":2,\r\n\"userName\":\"Niro91\",\r\n\"userEmail\":\"nathannirosh@gmail.com\",\r\n\"userMobileNumber\":\"0779252472\",\r\n\"nic\":\"915248212v\",\r\n\"customerId\":0,\r\n\"loanBalance\":15000,\r\n\"usedAmount\":0,\r\n\"installPlan\":1\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/create/new/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"create",
+						"new",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8081/get/customer/list",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/get/customer/list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"get",
+						"customer",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8081/get/customer/detail",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"customerId\":1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/get/customer/detail",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"get",
+						"customer",
+						"detail"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8081/user/login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"userName\":\"Niro91\",\r\n\"password\":\"imgjrwah\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/user/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8081/create/new/user",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"userId\":0,\r\n\"firstName\":\"Pen\",\r\n\"lastName\":\"Gnana\",\r\n\"dob\":\"18-04-1994\",\r\n\"userType\":1,\r\n\"userName\":\"p1994\",\r\n\"secretKey\":\"p19944\",\r\n\"userEmail\":\"Pen@gmail.com\",\r\n\"userMobileNumber\":\"07784789654\",\r\n\"nic\":\"952425312v\",\r\n\"customerId\":0,\r\n\"loanBalance\":15000,\r\n\"usedAmount\":0,\r\n\"installPlan\":1\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "create",
+					"host": [
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8081/get/all/products",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/get/all/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"get",
+						"all",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8081/get/order/single/request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"productId\":3,\r\n\"qty\":1\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/get/order/single/request",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"get",
+						"order",
+						"single",
+						"request"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8081/create/new/user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"orderDetail\":[\r\n        {\r\n            \"productId\":1,\r\n            \"qty\":2\r\n        },\r\n        {\r\n            \"productId\":2,\r\n            \"qty\":2\r\n        }\r\n    ],\r\n    \"paymentOption\":2,\r\n    \"userId\":11\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/create/order",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"create",
+						"order"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
