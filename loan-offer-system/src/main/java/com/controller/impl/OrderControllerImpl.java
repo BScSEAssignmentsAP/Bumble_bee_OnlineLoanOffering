@@ -58,15 +58,23 @@ else {
     public LoanOfferResponse placeOrder(@RequestBody CreateOrderReq createOrderReq) {
         CommonResponse commonResponse = orderBusiness.placeOrder(createOrderReq);
 
-        return LoanOfferResponse.generateResponse(
-                null,
-                ApplicationConstant.SuccessStatusCode,
-                ApplicationConstant.SuccessMsg);
-    }
+        if(commonResponse.isRes()){
+            return LoanOfferResponse.generateResponse(
+                   null,
+                    ApplicationConstant.SuccessStatusCode,
+                    ApplicationConstant.SuccessMsg);
+
+        }
+        else {
+            return LoanOfferResponse.generateResponse(
+                    null,
+                    commonResponse.getStatusCode(),
+                    commonResponse.getMsg());
+        }
 
 
-    //
 
 
 
-}
+
+}}
