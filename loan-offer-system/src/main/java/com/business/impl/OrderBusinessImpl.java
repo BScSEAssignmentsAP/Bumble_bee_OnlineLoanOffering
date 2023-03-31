@@ -44,7 +44,7 @@ logger.info("placeOrder----------->"+createOrderReq.toString());
         }
         orderRequest = orderRequest.substring(0, orderRequest.length()-1);
         logger.info("placeOrder-orderRequest------------------>" + orderRequest);
-        return null;//orderDAO.placeOrder(createOrderReq,orderRequest);
+        return orderDAO.placeOrder(createOrderReq,orderRequest);//orderDAO.placeOrder(createOrderReq,orderRequest);
 
     }
 

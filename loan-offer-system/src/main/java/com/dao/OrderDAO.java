@@ -1,5 +1,6 @@
 package com.dao;
 
+import com.dto.request.CreateOrderReq;
 import com.dto.request.GetOredrDetailReq;
 import com.dto.response.CommonResponse;
 import com.dto.response.GetOrderDetailRes;
@@ -22,4 +23,13 @@ public interface OrderDAO {
      * @return
      */
     CommonResponse getOrderSingleCalculation(GetOredrDetailReq getOrderDetailReq);
+
+
+    /**
+     * placeOrder
+     * @param createOrderReq
+     * @param orderRequest
+     * @return
+     */
+    CommonResponse placeOrder(CreateOrderReq createOrderReq, String orderRequest);
 }
