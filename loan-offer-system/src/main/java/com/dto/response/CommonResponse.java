@@ -1,6 +1,6 @@
 package com.dto.response;
 
-public class CommonResponse extends GeneralResponse{
+public class CommonResponse extends GeneralResponse {
     private Object value;
 
     public Object getValue() {

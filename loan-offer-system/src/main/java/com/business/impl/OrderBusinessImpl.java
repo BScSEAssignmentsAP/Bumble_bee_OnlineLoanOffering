@@ -23,8 +23,6 @@ public class OrderBusinessImpl implements OrderBusiness {
     @Autowired
     OrderDAO orderDAO;
 
-
-
     @Override
     public List<Product> getAllProducts() {
         return orderDAO.getAllProducts();
@@ -37,15 +35,14 @@ public class OrderBusinessImpl implements OrderBusiness {
 
     @Override
     public CommonResponse placeOrder(CreateOrderReq createOrderReq) {
-logger.info("placeOrder----------->"+createOrderReq.toString());
+        logger.info("placeOrder----------->" + createOrderReq.toString());
         String orderRequest = "";
         for (OrderInfoReq req : createOrderReq.getOrderDetail()) {
-            orderRequest = orderRequest + req.getProductId() +"||"+req.getQty()+",";
+            orderRequest = orderRequest + req.getProductId() + "||" + req.getQty() + ",";
         }
-        orderRequest = orderRequest.substring(0, orderRequest.length()-1);
+        orderRequest = orderRequest.substring(0, orderRequest.length() - 1);
         logger.info("placeOrder-orderRequest------------------>" + orderRequest);
-        return orderDAO.placeOrder(createOrderReq,orderRequest);//orderDAO.placeOrder(createOrderReq,orderRequest);
-
+        return orderDAO.placeOrder(createOrderReq, orderRequest);
     }
 
 

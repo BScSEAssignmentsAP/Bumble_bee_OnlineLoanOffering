@@ -37,14 +37,13 @@ public class OrderControllerImpl implements OrderController {
     @PostMapping("/get/order/single/request")
     public LoanOfferResponse getOrderSingleCalculation(@RequestBody GetOredrDetailReq getOrderDetailReq) {
         CommonResponse commonResponse = orderBusiness.getOrderSingleCalculation(getOrderDetailReq);
-        if(commonResponse.isRes()){
+        if (commonResponse.isRes()) {
             return LoanOfferResponse.generateResponse(
                     commonResponse.getValue(),
                     ApplicationConstant.SuccessStatusCode,
                     ApplicationConstant.SuccessMsg);
 
-        }
-else {
+        } else {
             return LoanOfferResponse.generateResponse(
                     null,
                     commonResponse.getStatusCode(),
@@ -58,14 +57,13 @@ else {
     public LoanOfferResponse placeOrder(@RequestBody CreateOrderReq createOrderReq) {
         CommonResponse commonResponse = orderBusiness.placeOrder(createOrderReq);
 
-        if(commonResponse.isRes()){
+        if (commonResponse.isRes()) {
             return LoanOfferResponse.generateResponse(
-                   null,
+                    null,
                     ApplicationConstant.SuccessStatusCode,
                     ApplicationConstant.SuccessMsg);
 
-        }
-        else {
+        } else {
             return LoanOfferResponse.generateResponse(
                     null,
                     commonResponse.getStatusCode(),
@@ -73,8 +71,5 @@ else {
         }
 
 
-
-
-
-
-}}
+    }
+}

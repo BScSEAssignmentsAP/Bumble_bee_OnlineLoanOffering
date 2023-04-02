@@ -22,9 +22,6 @@ public class GetOredrDetailReq {
 
     @Override
     public String toString() {
-        return "GetOredrDetailReq{" +
-                "productId=" + productId +
-                ", qty=" + qty +
-                '}';
+        return "GetOredrDetailReq{" + "productId=" + productId + ", qty=" + qty + '}';
     }
 }

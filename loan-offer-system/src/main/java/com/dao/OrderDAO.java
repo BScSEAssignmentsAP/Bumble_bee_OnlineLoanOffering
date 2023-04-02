@@ -12,13 +12,14 @@ public interface OrderDAO {
 
     /**
      * getAllProducts
+     *
      * @return
      */
     public List<Product> getAllProducts();
 
-
     /**
      * getOrderSingleCalculation
+     *
      * @param getOrderDetailReq
      * @return
      */
@@ -27,6 +28,7 @@ public interface OrderDAO {
 
     /**
      * placeOrder
+     *
      * @param createOrderReq
      * @param orderRequest
      * @return

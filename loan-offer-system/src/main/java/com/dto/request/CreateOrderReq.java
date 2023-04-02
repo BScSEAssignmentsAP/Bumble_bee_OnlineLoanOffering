@@ -37,7 +37,6 @@ public class CreateOrderReq {
         return "CreateOrderReq{" +
                 "paymentOption=" + paymentOption +
                 ", userId=" + userId +
-                ", orderDetail=" + orderDetail.toString() +
-                '}';
+                ", orderDetail=" + orderDetail.toString() + '}';
     }
 }

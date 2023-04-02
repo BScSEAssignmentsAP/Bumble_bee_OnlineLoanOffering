@@ -13,6 +13,7 @@ public interface UserBusiness {
 
     /**
      * createNewUser
+     *
      * @param createNewUserReq
      * @return
      */
@@ -20,6 +21,7 @@ public interface UserBusiness {
 
     /**
      * getCustomerDetail
+     *
      * @param getCustomerDetailReq
      * @return
      */
@@ -28,6 +30,7 @@ public interface UserBusiness {
 
     /**
      * getCustomerList
+     *
      * @return
      */
     List<CustomerRes> getCustomerList();
@@ -35,6 +38,7 @@ public interface UserBusiness {
 
     /**
      * login
+     *
      * @param loginReq
      * @return
      */

@@ -13,18 +13,16 @@ import java.util.logging.Logger;
 @Service
 public class EmailNotifyImpl implements EmailNotify {
 
-   Logger logger = Logger.getLogger(this.getClass().getName());
+    Logger logger = Logger.getLogger(this.getClass().getName());
 
     @Autowired
     JavaMailSender javaMailSender;
 
-@Value("${spring.mail.username}")
-  private String sender;
-
+    @Value("${spring.mail.username}")
+    private String sender;
 
     @Override
     public String sendEmil(EmailReq emailReq) {
-
         try {
             SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
             simpleMailMessage.setFrom(sender);
@@ -34,8 +32,8 @@ public class EmailNotifyImpl implements EmailNotify {
 
             javaMailSender.send(simpleMailMessage);
 
-        }catch (Exception exception){
-            logger.info("sendEmail-exception--------------->"+exception.toString());
+        } catch (Exception exception) {
+            logger.info("sendEmail-exception--------------->" + exception.toString());
         }
         return "Email sent successfully";
     }

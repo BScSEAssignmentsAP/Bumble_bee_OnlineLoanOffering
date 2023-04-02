@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 
 @Service
 public class UserBusinessImpl implements UserBusiness {
-    Logger logger =Logger.getLogger(this.getClass().getName());
+    Logger logger = Logger.getLogger(this.getClass().getName());
 
 
     @Autowired
@@ -31,20 +31,16 @@ public class UserBusinessImpl implements UserBusiness {
 
     @Override
     public GeneralResponse createNewUser(CreateNewUserRequest createNewUserReq) {
-       String randomPassword = CommonUtil.generateRandomPasscode();
-        logger.info("randomPassword------------>"+randomPassword);
+        String randomPassword = CommonUtil.generateRandomPasscode();
+        logger.info("randomPassword------------>" + randomPassword);
         createNewUserReq.setSecretKey(randomPassword);
-        GeneralResponse response=userDAO.createNewUser(createNewUserReq);
+        GeneralResponse response = userDAO.createNewUser(createNewUserReq);
 
         if (response.isRes()) {
             /*Send Password to User via email*/
             EmailReq emailReq = new EmailReq();
             emailReq.setReceiver(createNewUserReq.getUserEmail());
-            String bodyText = "Hi " + createNewUserReq.getFirstName() + "\n" +
-                    "Please find your loan offer system login" +"\n" +
-                    "Username is : " + createNewUserReq.getUserName()+"\n"+
-                    "Password is : " + randomPassword
-                    + "\n" + "Thank you, LoanOfferAdmin";
+            String bodyText = "Hi " + createNewUserReq.getFirstName() + "\n" + "Please find your loan offer system login" + "\n" + "Username is : " + createNewUserReq.getUserName() + "\n" + "Password is : " + randomPassword + "\n" + "Thank you, LoanOfferAdmin";
             logger.info("body--------------->" + bodyText);
             emailReq.setMessageBody(bodyText);
             emailReq.setSubject("LoanOfferSystem[ Login Password ]");

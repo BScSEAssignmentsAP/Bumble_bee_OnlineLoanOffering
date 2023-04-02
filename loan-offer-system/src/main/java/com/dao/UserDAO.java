@@ -3,7 +3,6 @@ package com.dao;
 import com.dto.request.UserLoginReq;
 import com.dto.response.CommonResponse;
 import com.dto.response.GeneralResponse;
-import com.dto.response.LoanOfferResponse;
 import com.dto.user.request.CreateNewUserRequest;
 import com.dto.user.request.GetCustomerDetailReq;
 import com.dto.user.response.CustomerRes;
@@ -14,6 +13,7 @@ public interface UserDAO {
 
     /**
      * createNewUser
+     *
      * @param createNewUserReq
      * @return
      */
@@ -21,6 +21,7 @@ public interface UserDAO {
 
     /**
      * getCustomerDetail
+     *
      * @param getCustomerDetailReq
      * @return
      */
@@ -29,6 +30,7 @@ public interface UserDAO {
 
     /**
      * getCustomerList
+     *
      * @return
      */
     List<CustomerRes> getCustomerList();

@@ -16,8 +16,6 @@ public class GetCustomerDetailReq {
 
     @Override
     public String toString() {
-        return "GetCustomerDetailReq{" +
-                "customerId=" + customerId +
-                '}';
+        return "GetCustomerDetailReq{" + "customerId=" + customerId + '}';
     }
 }

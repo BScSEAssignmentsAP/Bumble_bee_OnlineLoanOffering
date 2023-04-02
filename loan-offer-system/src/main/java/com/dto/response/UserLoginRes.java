@@ -3,9 +3,8 @@ package com.dto.response;
 public class UserLoginRes {
     private int userId;
     private int userType;
-    private  String firstName;
+    private String firstName;
     private String lastName;
-
 
     public int getUserId() {
         return userId;

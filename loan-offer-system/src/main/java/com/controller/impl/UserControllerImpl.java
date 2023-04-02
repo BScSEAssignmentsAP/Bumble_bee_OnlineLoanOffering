@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-//import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -31,17 +30,16 @@ public class UserControllerImpl implements UserController {
     @PostMapping("/create/new/user")
     public LoanOfferResponse createNewUser(@RequestBody CreateNewUserRequest createNewUserReq) {
         GeneralResponse response = userBusiness.createNewUser(createNewUserReq);
-        return LoanOfferResponse.generateResponse(null,response.getStatusCode(),response.getMsg());
+        return LoanOfferResponse.generateResponse(null, response.getStatusCode(), response.getMsg());
     }
 
     @Override
     @PostMapping("/get/customer/detail")
     public LoanOfferResponse getCustomerDetail(@RequestBody GetCustomerDetailReq getCustomerDetailReq) {
-        CustomerRes customerDetail =userBusiness.getCustomerDetail(getCustomerDetailReq);
+        CustomerRes customerDetail = userBusiness.getCustomerDetail(getCustomerDetailReq);
         return LoanOfferResponse.generateResponse(customerDetail,
                 ApplicationConstant.SuccessStatusCode,
                 ApplicationConstant.SuccessMsg);
-
     }
 
     @Override
@@ -49,14 +47,14 @@ public class UserControllerImpl implements UserController {
     public LoanOfferResponse getCustomerList() {
         List<CustomerRes> customerResList = userBusiness.getCustomerList();
         return LoanOfferResponse.generateResponse(customerResList,
-                                                    ApplicationConstant.SuccessStatusCode,
-                                                    ApplicationConstant.SuccessMsg);
+                ApplicationConstant.SuccessStatusCode,
+                ApplicationConstant.SuccessMsg);
     }
 
     @Override
     @PostMapping("/user/login")
     public LoanOfferResponse login(@RequestBody UserLoginReq loginReq) {
-        CommonResponse commonResponse=userBusiness.login(loginReq);
+        CommonResponse commonResponse = userBusiness.login(loginReq);
 
         return LoanOfferResponse.generateResponse(commonResponse.getValue(),
                 commonResponse.getStatusCode(),

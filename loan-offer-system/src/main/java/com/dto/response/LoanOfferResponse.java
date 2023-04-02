@@ -2,10 +2,9 @@ package com.dto.response;
 
 public class LoanOfferResponse {
 
-    private  Object value;
-    private  int status;
+    private Object value;
+    private int status;
     private String msg;
-
 
     public LoanOfferResponse() {
     }
@@ -41,7 +40,7 @@ public class LoanOfferResponse {
     }
 
 
-    public  static LoanOfferResponse generateResponse(Object value,int status,String msg){
-return new LoanOfferResponse(value,status,msg);
+    public static LoanOfferResponse generateResponse(Object value, int status, String msg) {
+        return new LoanOfferResponse(value, status, msg);
     }
 }

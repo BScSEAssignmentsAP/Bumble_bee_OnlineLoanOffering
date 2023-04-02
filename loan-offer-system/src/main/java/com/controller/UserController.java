@@ -8,6 +8,7 @@ import com.dto.user.request.GetCustomerDetailReq;
 public interface UserController {
     /**
      * createNewUser
+     *
      * @param createNewUserReq
      * @return
      */
@@ -15,9 +16,9 @@ public interface UserController {
 
     public LoanOfferResponse createNewUser(CreateNewUserRequest createNewUserReq);
 
-
     /**
      * getCustomerDetail
+     *
      * @param getCustomerDetailReq
      * @return
      */
@@ -25,12 +26,9 @@ public interface UserController {
 
 
     /**
-     *
      * @return
      */
     public LoanOfferResponse getCustomerList();
-
-
 
 
     public LoanOfferResponse login(UserLoginReq loginReq);

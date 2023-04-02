@@ -5,11 +5,8 @@ import com.dao.OrderDAO;
 import com.dto.request.CreateOrderReq;
 import com.dto.request.GetOredrDetailReq;
 import com.dto.response.CommonResponse;
-import com.dto.response.GeneralResponse;
 import com.dto.response.GetOrderDetailRes;
 import com.dto.response.Product;
-import com.dto.user.response.CustomerRes;
-import com.util.HashUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceUtils;
@@ -31,80 +28,52 @@ public class OrderDAOImpl implements OrderDAO {
     public List<Product> getAllProducts() {
 
 
-        Long startTime=System.currentTimeMillis();
+        Long startTime = System.currentTimeMillis();
 
-        List<Product> list=null;//new CustomerRes();
+        List<Product> list = null;
 
         Connection connection = null;
-        //Statement statement;
+
         CallableStatement callableStatement;
         ResultSet resultSet;
         try {
-
-
             connection = DataSourceUtils.getConnection(jdbcTemplate.getDataSource());
-
-            //callableStatement = connection.prepareCall(OfferDAOConstant.UserConstant.INSERT_UPDATE_ADMIN_CUSTOMER);
             callableStatement = connection.prepareCall(OfferDAOConstant.OrderConstant.GET_ALL_PRODUCTS);
-
-
-
             callableStatement.execute();
             resultSet = callableStatement.getResultSet();
 
-
             if (resultSet != null) {
-                list =new ArrayList<>();
+                list = new ArrayList<>();
                 while (resultSet.next()) {
                     Product response = new Product();
                     response.setProductId(resultSet.getInt(1));
                     response.setProductName(resultSet.getString(2));
-
                     list.add(response);
                 }
             }
 
-        }catch (SQLException exception){
-            logger.info("An error occured in getAllProducts"+exception.toString());
-        }finally {
-            DataSourceUtils.releaseConnection(connection,jdbcTemplate.getDataSource());
-            logger.info("Time taken for getAllProducts in seconds:"+(double)(System.currentTimeMillis()-startTime)/1000);
+        } catch (SQLException exception) {
+            logger.info("An error occured in getAllProducts" + exception.toString());
+        } finally {
+            DataSourceUtils.releaseConnection(connection, jdbcTemplate.getDataSource());
+            logger.info("Time taken for getAllProducts in seconds:" + (double) (System.currentTimeMillis() - startTime) / 1000);
         }
         return list;
-
-
     }
-
-
-
-
-
-
-
 
     @Override
     public CommonResponse getOrderSingleCalculation(GetOredrDetailReq getOrderDetailReq) {
         Long startTime = System.currentTimeMillis();
-
         CommonResponse response = new CommonResponse();
-
-
-
         Connection connection = null;
-        //Statement statement;
         CallableStatement callableStatement;
 
         try {
             logger.info("getOrderSingleCalculation-request------------>" + getOrderDetailReq.toString());
-
             connection = DataSourceUtils.getConnection(jdbcTemplate.getDataSource());
-
-            //callableStatement = connection.prepareCall(OfferDAOConstant.UserConstant.INSERT_UPDATE_ADMIN_CUSTOMER);
             callableStatement = connection.prepareCall(OfferDAOConstant.OrderConstant.GET_ORDER_DETAIL_PROC);
             callableStatement.setObject(1, getOrderDetailReq.getProductId(), Types.INTEGER);
             callableStatement.setObject(2, getOrderDetailReq.getQty(), Types.VARCHAR);
-
-
 
             callableStatement.registerOutParameter(3, Types.INTEGER);
             callableStatement.registerOutParameter(4, Types.VARCHAR);
@@ -113,10 +82,9 @@ public class OrderDAOImpl implements OrderDAO {
             callableStatement.registerOutParameter(7, Types.VARCHAR);
             callableStatement.registerOutParameter(8, Types.DOUBLE);
 
-            callableStatement.registerOutParameter(9,Types.BOOLEAN);
-            callableStatement.registerOutParameter(10,Types.INTEGER);
-            callableStatement.registerOutParameter(11,Types.VARCHAR);
-
+            callableStatement.registerOutParameter(9, Types.BOOLEAN);
+            callableStatement.registerOutParameter(10, Types.INTEGER);
+            callableStatement.registerOutParameter(11, Types.VARCHAR);
 
             callableStatement.execute();
             callableStatement.getResultSet();
@@ -125,23 +93,17 @@ public class OrderDAOImpl implements OrderDAO {
             response.setStatusCode((Integer) callableStatement.getObject(10));
             response.setMsg((String) callableStatement.getObject(11));
 
-
-            if (response.isRes()){
+            if (response.isRes()) {
                 GetOrderDetailRes getOrderDetailRes = new GetOrderDetailRes();
                 getOrderDetailRes.setProductId(callableStatement.getInt(3));
-                getOrderDetailRes.setCategoryName( callableStatement.getString(4));
-                getOrderDetailRes.setBrandName( callableStatement.getString(5));
+                getOrderDetailRes.setCategoryName(callableStatement.getString(4));
+                getOrderDetailRes.setBrandName(callableStatement.getString(5));
                 getOrderDetailRes.setQty(callableStatement.getInt(6));
-                getOrderDetailRes.setProductName( callableStatement.getString(7));
-                getOrderDetailRes.setSubTotal( callableStatement.getDouble(8));
-
+                getOrderDetailRes.setProductName(callableStatement.getString(7));
+                getOrderDetailRes.setSubTotal(callableStatement.getDouble(8));
                 response.setValue(getOrderDetailRes);
 
             }
-
-
-//logger.info(response.toString());
-
         } catch (SQLException exception) {
             logger.info("An error occured in getOrderSingleCalculation" + exception.toString());
 
@@ -149,8 +111,6 @@ public class OrderDAOImpl implements OrderDAO {
             DataSourceUtils.releaseConnection(connection, jdbcTemplate.getDataSource());
             logger.info("Time taken for getOrderSingleCalculation in seconds:" + (double) (System.currentTimeMillis() - startTime) / 1000);
         }
-
-
         return response;
     }
 
@@ -170,10 +130,9 @@ public class OrderDAOImpl implements OrderDAO {
             callableStatement.setObject(2, createOrderReq.getUserId(), Types.INTEGER);
             callableStatement.setObject(3, orderRequest, Types.VARCHAR);
 
-
-            callableStatement.registerOutParameter(4,Types.BOOLEAN);
-            callableStatement.registerOutParameter(5,Types.INTEGER);
-            callableStatement.registerOutParameter(6,Types.VARCHAR);
+            callableStatement.registerOutParameter(4, Types.BOOLEAN);
+            callableStatement.registerOutParameter(5, Types.INTEGER);
+            callableStatement.registerOutParameter(6, Types.VARCHAR);
 
             callableStatement.execute();
             callableStatement.getResultSet();
@@ -189,7 +148,6 @@ public class OrderDAOImpl implements OrderDAO {
             DataSourceUtils.releaseConnection(connection, jdbcTemplate.getDataSource());
             logger.info("Time taken for placeOrder in seconds:" + (double) (System.currentTimeMillis() - startTime) / 1000);
         }
-
         return response;
     }
 }

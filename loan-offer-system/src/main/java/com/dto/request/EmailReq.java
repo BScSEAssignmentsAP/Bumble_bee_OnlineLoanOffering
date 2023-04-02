@@ -1,9 +1,9 @@
 package com.dto.request;
 
 public class EmailReq {
-    private  String receiver;
-    private  String messageBody;
-    private  String subject;
+    private String receiver;
+    private String messageBody;
+    private String subject;
 
     public EmailReq() {
     }

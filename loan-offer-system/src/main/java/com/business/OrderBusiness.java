@@ -11,22 +11,23 @@ import java.util.List;
 public interface OrderBusiness {
     /**
      * getAllProducts
+     *
      * @return
      */
 
     List<Product> getAllProducts();
 
-
     /**
      * getOrderSingleCalculation
+     *
      * @param getOrderDetailReq
      * @return
      */
     CommonResponse getOrderSingleCalculation(GetOredrDetailReq getOrderDetailReq);
 
-
     /**
      * placeOrder
+     *
      * @param createOrderReq
      * @return
      */

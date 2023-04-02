@@ -6,16 +6,17 @@ import com.dto.response.LoanOfferResponse;
 
 public interface OrderController {
 
-
     /**
      * getAllProducts
+     *
      * @return
      */
-    public LoanOfferResponse getAllProducts() ;
+    public LoanOfferResponse getAllProducts();
 
 
     /**
      * getOrderSingleCalculation
+     *
      * @param getOrderDetailReq
      * @return
      */
@@ -24,6 +25,7 @@ public interface OrderController {
 
     /**
      * placeOrder
+     *
      * @param createOrderReq
      * @return
      */

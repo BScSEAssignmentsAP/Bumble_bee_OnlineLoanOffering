@@ -1,11 +1,8 @@
 package com.dto.request;
 
-import java.util.List;
-
 public class OrderInfoReq {
     private int productId;
     private double qty;
-
 
     public OrderInfoReq() {
     }
@@ -25,7 +22,6 @@ public class OrderInfoReq {
     public void setQty(double qty) {
         this.qty = qty;
     }
-
 
     @Override
     public String toString() {
