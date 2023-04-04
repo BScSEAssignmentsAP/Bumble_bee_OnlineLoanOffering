@@ -6,7 +6,6 @@ import com.dto.request.CreateOrderReq;
 import com.dto.request.GetOredrDetailReq;
 import com.dto.request.OrderInfoReq;
 import com.dto.response.CommonResponse;
-import com.dto.response.GetOrderDetailRes;
 import com.dto.response.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
